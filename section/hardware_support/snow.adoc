@@ -1,0 +1,9 @@
+=== Snow revisions ===
+The XE303C12 has up to 5 revisions:
+
+[options="header"]
+|=====
+| Revision | ChromeOS dtb | Mainline dtb
+| 1, 2, 3, 4 | exynos5250-snow-rev4.dtb | exynos5250-snow.dtb
+| 5 | exynos5250-snow-rev5.dtb | exynos5250-snow-rev5.dtb
+|=====

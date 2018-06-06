@@ -1,0 +1,10 @@
+== Hardware support ==
+
+These instructions target ARM Chromebooks running the Samsung Exynos 5250 SoC in 11.6" laptop bodies, specifically the following:
+
+[options="header"]
+|=========
+| Name | a.k.a. | codename/dtb | board name | base board
+| Samsung ARM Chromebook | XE303C12, Series 3 | snow | daisy | daisy
+| HP Chromebook 11 | HP Chromebook 11 G1 | spring | daisy_spring | snow
+|=========

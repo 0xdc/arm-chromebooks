@@ -1,0 +1,52 @@
+== First time setup ==
+
+=== Entering developer mode ===
+
+WARNING: This action causes the laptop to wipe its disk and disable security protections
+
+Instructions can be found on the
+https://www.chromium.org/a/chromium.org/dev/chromium-os/developer-information-for-chrome-os-devices/samsung-arm-chromebook#TOC-Developer-Mode[chromium website].
+
+Once rebooted, enable `dev_usb_boot=1` with:
+
+    # enable_dev_usb_boot
+
+Once set, operating systems can be booted from an SD card or USB storage device by pressing `Ctrl-U` on the startup warning screen.
+
+TIP: If you want the Chromebook in Developer Mode but not run a custom kernel (e.g. crouton, which isn't covered here), set `dev_boot_signed_only=1` with `crossystem`.
+
+=== Getting a shell ===
+
+You can access a console window by pressing Ctrl+Alt+F2. The top row of function keys is equivalent to the Functionkeys, so it may be labelled as a Forward arrow (->). You can use Ctrl+Alt+F1 (Back, <-) to return to Aura. You can do this at any time once ChromeOS has booted.
+
+If you log in as a guest (Browse as Guest) or with a Google Account, you can open a shell with Ctrl+Alt+T. From the crosh shell (prompt `crosh>`), use the `shell` command to get a shell as the user `chronos`.
+
+`chronos` has sudo access to gain root privileges.
+
+=== Neutering the warning screen (optional) ===
+
+WARNING: This requires the removal of the firmware write-protect screw
+
+By default, the "scary" developer screen has a 30 second timeout and a loud beep. These can be neutered to a 3 second delay and no beep.
+
+These changes persist even if the laptop is taken out of developer mode (i.e. back to secure ChromeOS mode).
+
+[options="header"]
+|===
+| Model | Firmware write-protect screw location
+| Samsung ARM Chromebook | Inside the case, near the HDMI port; remove the 5 visible screws on the bottom of the case and the 4 screws under the feet
+| HP Chromebook 11 | Inside the case; remove screws from under the soft padding on the bottom of the laptop and pry open
+|===
+
+==== The easy way ====
+
+Use `gbb_flags.sh`:
+
+    # /usr/share/vboot/bin/set_gbb_flags.sh 0x11
+
+Run `gbb_flags.sh` without arguments for a description of available flags.
+
+==== The hard way ====
+
+For full instructions, including backing up the firmware flash data, see these
+https://johnlewis.ie/neutering-the-developer-mode-screen-on-your-chromebook/[instructions (johnlewis.ie)].

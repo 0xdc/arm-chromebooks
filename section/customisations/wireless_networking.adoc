@@ -1,0 +1,16 @@
+=== Wireless networking ===
+
+* Driver: `MWIFIEX_SDIO`
+* Firmware: `sd8797`
+* Software
+** `iw`
+** `wpa_supplicant`
+
+`/etc/wpa_supplicant/wpa_supplicant.conf`:
+
+----
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=wheel
+update_config=1
+----
+
+You can customise wpa_supplicant further or use wpa_cli as root or, if configured like above, as a user in the 'wheel' group.

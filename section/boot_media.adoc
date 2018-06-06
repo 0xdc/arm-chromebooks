@@ -1,0 +1,33 @@
+== Prepare installation media ==
+
+* GPT partition table
+* SD card
+** Samsung ARM Chromebook only
+** Device is /dev/mmcblk1
+** Partitions are separated with 'p', e.g. /dev/mmcblk1p3
+* USB storage
+** Device is /dev/sda
+* Internal Storage
+** Device is /dev/mmcblk0
+** Factory shipped with ChromeOS
+
+The minimum required partition layout is as follows:
+
+[options="header"]
+|===
+| Partition number | Type | Size
+| 1 | ChromeOS kernel | ~8M
+| 2 | ext4 | >3G
+|===
+
+8MB is the size of a bootable kernel image. Additional space may need to be allocated to support an initramfs.
+
+Depending on your partitioning tool, the type of the ChromeOS kernel partition may differ:
+
+[options="header"]
+|===
+| Tool | ChromeOS kernel type is
+| fdisk | 66
+| gdisk | 7f00
+| https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs[*] | FE3A2A5D-4F32-41A7-B725-ACCC3285A309
+|===

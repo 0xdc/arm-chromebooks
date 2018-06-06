@@ -1,0 +1,62 @@
+== Cross-compiling ==
+
+    # crossdev -S -t armv7a-hardfloat-linux-gnueabi
+
+When building the kernel, set the following environment variables:
+
+-------
+ARCH=arm
+CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi-
+-------
+
+=== qemu user-mode emulation ===
+
+
+----
+# emerge --buildpkg -a qemu[static-user,qemu_user_targets_arm]
+# mkdir stage3-armv7a
+# tar xf stage3-armv7a_hardfp-latest.tar.bz2 -C stage3-armv7a
+# ROOT=stage3-armv7a emerge --nodeps --oneshot --usepkgonly qemu
+----
+
+Because arm has a variety of possible CPU emulations, you will need to use a wrapper script to customise the CPU.
+
+I recommend unpacking qemu into its own directory and copying that prepared directory into any arm chroots that you need (if you need a lot).
+
+----
+# ROOT=qemu emerge --nodeps --oneshot --usepkgonly qemu
+# cd qemu
+----
+----
+/*
+ * pass arguments to qemu binary
+ */
+
+#include <string.h>
+#include <unistd.h>
+
+int main(int argc, char **argv, char **envp) {
+	char *newargv[argc + 3];
+
+	newargv[0] = argv[0];
+	newargv[1] = "-cpu";
+	newargv[2] = "cortex-a15";
+
+	memcpy(&newargv[3], &argv[1], sizeof(*argv) * (argc -1));
+	newargv[argc + 2] = NULL;
+	return execve("/usr/bin/qemu-arm", newargv, envp);
+}
+
+----
+
+----
+# gcc -static qemu-wrapper.c -O3 -s -o qemu-wrapper
+# cd ..
+----
+
+----
+# echo ':arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/qemu-wrapper:' > /proc/sys/fs/binfmt_misc/register
+# rsync -a qemu/ stage3-armv7a
+----
+
+You can then chroot, pychroot or systemd-nspawn as normal.
