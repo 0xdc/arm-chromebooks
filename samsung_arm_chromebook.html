@@ -1,0 +1,1370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.10" />
+<title>Samsung ARM Chromebook</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #808080 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0040D0 } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Samsung ARM Chromebook</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_installation_options">Installation options</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You need to have the Chromebook in developer mode to run a custom Linux distribution.</p></div>
+<div class="paragraph"><p>Developer mode includes a shell that can be used to install a Gentoo system to a USB drive (or SD card for the Samsung ARM Chromebook). Once unpacked, you can chroot into the environment to customise it.</p></div>
+<div class="paragraph"><p>By default, most of the ChromeOS filesystem is mounted read-only. While it is possible to make more of the system writable and persistant, locations such as <code>/home</code> and <code>/mnt/stateful_partition</code> are already writable.</p></div>
+<div class="paragraph"><p>If you have a prepared stage4, or are willing to build upon the upstream stage3, a bootable disk can be prepared from another machine.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hardware_support">Hardware support</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>These instructions target ARM Chromebooks running the Samsung Exynos 5250 SoC in 11.6" laptop bodies, specifically the following:</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Name </th>
+<th align="left" valign="top"> a.k.a. </th>
+<th align="left" valign="top"> codename/dtb </th>
+<th align="left" valign="top"> board name </th>
+<th align="left" valign="top"> base board</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Samsung ARM Chromebook</p></td>
+<td align="left" valign="top"><p class="table">XE303C12, Series 3</p></td>
+<td align="left" valign="top"><p class="table">snow</p></td>
+<td align="left" valign="top"><p class="table">daisy</p></td>
+<td align="left" valign="top"><p class="table">daisy</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">HP Chromebook 11</p></td>
+<td align="left" valign="top"><p class="table">HP Chromebook 11 G1</p></td>
+<td align="left" valign="top"><p class="table">spring</p></td>
+<td align="left" valign="top"><p class="table">daisy_spring</p></td>
+<td align="left" valign="top"><p class="table">snow</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_snow_revisions">Snow revisions</h3>
+<div class="paragraph"><p>The XE303C12 has up to 5 revisions:</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Revision </th>
+<th align="left" valign="top"> ChromeOS dtb </th>
+<th align="left" valign="top"> Mainline dtb</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">1, 2, 3, 4</p></td>
+<td align="left" valign="top"><p class="table">exynos5250-snow-rev4.dtb</p></td>
+<td align="left" valign="top"><p class="table">exynos5250-snow.dtb</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">5</p></td>
+<td align="left" valign="top"><p class="table">exynos5250-snow-rev5.dtb</p></td>
+<td align="left" valign="top"><p class="table">exynos5250-snow-rev5.dtb</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_first_time_setup">First time setup</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_entering_developer_mode">Entering developer mode</h3>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">This action causes the laptop to wipe its disk and disable security protections</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>Instructions can be found on the
+<a href="https://www.chromium.org/a/chromium.org/dev/chromium-os/developer-information-for-chrome-os-devices/samsung-arm-chromebook#TOC-Developer-Mode">chromium website</a>.</p></div>
+<div class="paragraph"><p>Once rebooted, enable <code>dev_usb_boot=1</code> with:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code># enable_dev_usb_boot</code></pre>
+</div></div>
+<div class="paragraph"><p>Once set, operating systems can be booted from an SD card or USB storage device by pressing <code>Ctrl-U</code> on the startup warning screen.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">If you want the Chromebook in Developer Mode but not run a custom kernel (e.g. crouton, which isn&#8217;t covered here), set <code>dev_boot_signed_only=1</code> with <code>crossystem</code>.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_a_shell">Getting a shell</h3>
+<div class="paragraph"><p>You can access a console window by pressing Ctrl+Alt+F2. The top row of function keys is equivalent to the Functionkeys, so it may be labelled as a Forward arrow (&#8594;). You can use Ctrl+Alt+F1 (Back, &#8592;) to return to Aura. You can do this at any time once ChromeOS has booted.</p></div>
+<div class="paragraph"><p>If you log in as a guest (Browse as Guest) or with a Google Account, you can open a shell with Ctrl+Alt+T. From the crosh shell (prompt <code>crosh&gt;</code>), use the <code>shell</code> command to get a shell as the user <code>chronos</code>.</p></div>
+<div class="paragraph"><p><code>chronos</code> has sudo access to gain root privileges.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_neutering_the_warning_screen_optional">Neutering the warning screen (optional)</h3>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">This requires the removal of the firmware write-protect screw</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>By default, the "scary" developer screen has a 30 second timeout and a loud beep. These can be neutered to a 3 second delay and no beep.</p></div>
+<div class="paragraph"><p>These changes persist even if the laptop is taken out of developer mode (i.e. back to secure ChromeOS mode).</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Model </th>
+<th align="left" valign="top"> Firmware write-protect screw location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Samsung ARM Chromebook</p></td>
+<td align="left" valign="top"><p class="table">Inside the case, near the HDMI port; remove the 5 visible screws on the bottom of the case and the 4 screws under the feet</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">HP Chromebook 11</p></td>
+<td align="left" valign="top"><p class="table">Inside the case; remove screws from under the soft padding on the bottom of the laptop and pry open</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_the_easy_way">The easy way</h4>
+<div class="paragraph"><p>Use <code>gbb_flags.sh</code>:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code># /usr/share/vboot/bin/set_gbb_flags.sh 0x11</code></pre>
+</div></div>
+<div class="paragraph"><p>Run <code>gbb_flags.sh</code> without arguments for a description of available flags.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_the_hard_way">The hard way</h4>
+<div class="paragraph"><p>For full instructions, including backing up the firmware flash data, see these
+<a href="https://johnlewis.ie/neutering-the-developer-mode-screen-on-your-chromebook/">instructions (johnlewis.ie)</a>.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prepare_installation_media">Prepare installation media</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+GPT partition table
+</p>
+</li>
+<li>
+<p>
+SD card
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Samsung ARM Chromebook only
+</p>
+</li>
+<li>
+<p>
+Device is /dev/mmcblk1
+</p>
+</li>
+<li>
+<p>
+Partitions are separated with <em>p</em>, e.g. /dev/mmcblk1p2
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+USB storage
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Device is /dev/sda
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Internal Storage
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Device is /dev/mmcblk0
+</p>
+</li>
+<li>
+<p>
+Factory shipped with ChromeOS
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="paragraph"><p>The minimum required partition layout is as follows:</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Partition number </th>
+<th align="left" valign="top"> Type </th>
+<th align="left" valign="top"> Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">ChromeOS kernel</p></td>
+<td align="left" valign="top"><p class="table">~8M</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table">ext4</p></td>
+<td align="left" valign="top"><p class="table">&gt;3G</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>8MB is the size of a bootable kernel image. Additional space may need to be allocated to support an initramfs.</p></div>
+<div class="paragraph"><p>Depending on your partitioning tool, the type of the ChromeOS kernel partition may differ:</p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Tool </th>
+<th align="left" valign="top"> ChromeOS kernel type is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">fdisk</p></td>
+<td align="left" valign="top"><p class="table">66</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">gdisk</p></td>
+<td align="left" valign="top"><p class="table">7f00</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><a href="https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs">*</a></p></td>
+<td align="left" valign="top"><p class="table">FE3A2A5D-4F32-41A7-B725-ACCC3285A309</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_booting_with_nv_u_boot">Booting with nv-u-boot</h3>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Partition number </th>
+<th align="left" valign="top"> Type </th>
+<th align="left" valign="top"> Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">1</p></td>
+<td align="left" valign="top"><p class="table">ChromeOS kernel</p></td>
+<td align="left" valign="top"><p class="table">~1M</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">2</p></td>
+<td align="left" valign="top"><p class="table">ChromeOS kernel</p></td>
+<td align="left" valign="top"><p class="table">~8M</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">3</p></td>
+<td align="left" valign="top"><p class="table">ext2</p></td>
+<td align="left" valign="top"><p class="table">~256M</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">4</p></td>
+<td align="left" valign="top"><p class="table">ext4</p></td>
+<td align="left" valign="top"><p class="table">&gt;3G</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cross_compiling">Cross-compiling</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre><code># crossdev -S -t armv7a-hardfloat-linux-gnueabi</code></pre>
+</div></div>
+<div class="paragraph"><p>When building the kernel, set the following environment variables:</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="na">ARCH</span><span class="o">=</span><span class="s">arm</span>
+<span class="na">CROSS_COMPILE</span><span class="o">=</span><span class="s">armv7a-hardfloat-linux-gnueabi-</span>
+</pre></div></div></div>
+<div class="sect2">
+<h3 id="_qemu_user_mode_emulation">qemu user-mode emulation</h3>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge --buildpkg -a qemu<span class="o">[</span>static-user,qemu_user_targets_arm<span class="o">]</span>
+<span class="gp">#</span> mkdir stage3-armv7a
+<span class="gp">#</span> tar xf stage3-armv7a_hardfp-latest.tar.bz2 -C stage3-armv7a
+<span class="gp">#</span> <span class="nv">ROOT</span><span class="o">=</span>stage3-armv7a emerge --nodeps --oneshot --usepkgonly qemu
+</pre></div></div></div>
+<div class="paragraph"><p>Because arm has a variety of possible CPU emulations, you will need to use a wrapper script to customise the CPU.</p></div>
+<div class="paragraph"><p>I recommend unpacking qemu into its own directory and copying that prepared directory into any arm chroots that you need (if you need a lot).</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nv">ROOT</span><span class="o">=</span>qemu emerge --nodeps --oneshot --usepkgonly qemu
+<span class="gp">#</span> <span class="nb">cd</span> qemu
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * pass arguments to qemu binary</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">char</span> <span class="o">*</span><span class="n">newargv</span><span class="p">[</span><span class="n">argc</span> <span class="o">+</span> <span class="mi">3</span><span class="p">];</span>
+
+        <span class="n">newargv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="n">newargv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;-cpu&quot;</span><span class="p">;</span>
+        <span class="n">newargv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;cortex-a15&quot;</span><span class="p">;</span>
+
+        <span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">newargv</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">argc</span> <span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+        <span class="n">newargv</span><span class="p">[</span><span class="n">argc</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">execve</span><span class="p">(</span><span class="s">&quot;/usr/bin/qemu-arm&quot;</span><span class="p">,</span> <span class="n">newargv</span><span class="p">,</span> <span class="n">envp</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> gcc -static qemu-wrapper.c -O3 -s -o qemu-wrapper
+<span class="gp">#</span> <span class="nb">cd</span> ..
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s1">&#39;:arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/qemu-wrapper:&#39;</span> &gt; /proc/sys/fs/binfmt_misc/register
+<span class="gp">#</span> rsync -a qemu/ stage3-armv7a
+</pre></div></div></div>
+<div class="paragraph"><p>You can then chroot, pychroot or systemd-nspawn as normal.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_a_kernel">Building a kernel</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Build requirements: <code>@system bc u-boot-tools vboot-utils dtc</code></p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Kernel version </th>
+<th align="left" valign="top"> Samsung </th>
+<th align="left" valign="top"> HP </th>
+<th align="left" valign="top"> config command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git">linux-4.14.y</a></p></td>
+<td align="left" valign="top"><p class="table"><strong>Yes</strong></p></td>
+<td align="left" valign="top"><p class="table">No</p></td>
+<td align="left" valign="top"><p class="table"><code>make exynos_defconfig</code></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><a href="https://chromium.googlesource.com/chromiumos/third_party/kernel/">chromeos-3.8</a></p></td>
+<td align="left" valign="top"><p class="table">Yes</p></td>
+<td align="left" valign="top"><p class="table"><strong>Yes</strong></p></td>
+<td align="left" valign="top"><p class="table"><code>./chromeos/scripts/prepareconfig chromeos-exynos5</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> make zImage
+<span class="gp">#</span> make dtbs
+<span class="gp">#</span> make modules
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">dts</span><span class="o">-</span><span class="n">v1</span><span class="o">/</span><span class="p">;</span>
+<span class="o">/</span> <span class="p">{</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Chrome OS kernel image with one or more FDT blobs&quot;</span><span class="p">;</span>
+        <span class="cp">#address-cells = <b>&lt;1&gt;</b>;</span>
+        <span class="n">images</span> <span class="p">{</span>
+                <span class="n">kernel</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;kernel&quot;</span><span class="p">;</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;arch/arm/boot/zImage&quot;</span><span class="p">);</span>
+                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;kernel_noload&quot;</span><span class="p">;</span>
+                        <span class="n">arch</span> <span class="o">=</span> <span class="s">&quot;arm&quot;</span><span class="p">;</span>
+                        <span class="n">os</span> <span class="o">=</span> <span class="s">&quot;linux&quot;</span><span class="p">;</span>
+                        <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+                        <span class="n">load</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">entry</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="p">};</span>
+                <span class="n">fdt</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;exynos5250-snow.dtb&quot;</span><span class="p">;</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;arch/arm/boot/dts/exynos5250-snow.dtb&quot;</span><span class="p">);</span>
+                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;flat_dt&quot;</span><span class="p">;</span>
+                        <span class="n">arch</span> <span class="o">=</span> <span class="s">&quot;arm&quot;</span><span class="p">;</span>
+                        <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+                        <span class="n">hash</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                                <span class="n">algo</span> <span class="o">=</span> <span class="s">&quot;sha1&quot;</span><span class="p">;</span>
+                        <span class="p">};</span>
+                <span class="p">};</span>
+                <span class="n">fdt</span><span class="err">@</span><span class="mi">2</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;exynos5250-spring.dtb&quot;</span><span class="p">;</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;arch/arm/boot/dts/exynos5250-spring.dtb&quot;</span><span class="p">);</span>
+                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;flat_dt&quot;</span><span class="p">;</span>
+                        <span class="n">arch</span> <span class="o">=</span> <span class="s">&quot;arm&quot;</span><span class="p">;</span>
+                        <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+                        <span class="n">hash</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                                <span class="n">algo</span> <span class="o">=</span> <span class="s">&quot;sha1&quot;</span><span class="p">;</span>
+                        <span class="p">};</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+        <span class="n">configurations</span> <span class="p">{</span>
+                <span class="k">default</span> <span class="o">=</span> <span class="s">&quot;conf@1&quot;</span><span class="p">;</span>
+                <span class="n">conf</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;snow&quot;</span><span class="p">;</span>
+                        <span class="n">kernel</span> <span class="o">=</span> <span class="s">&quot;kernel@1&quot;</span><span class="p">;</span>
+                        <span class="n">fdt</span> <span class="o">=</span> <span class="s">&quot;fdt@1&quot;</span><span class="p">;</span>
+                <span class="p">};</span>
+                <span class="n">conf</span><span class="err">@</span><span class="mi">2</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;spring&quot;</span><span class="p">;</span>
+                        <span class="n">kernel</span> <span class="o">=</span> <span class="s">&quot;kernel@1&quot;</span><span class="p">;</span>
+                        <span class="n">fdt</span> <span class="o">=</span> <span class="s">&quot;fdt@2&quot;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> mkimage -f kernel.its kernel.itb
+<span class="gp">#</span> tee cmdline <span class="o">&lt;&lt;&lt;</span><span class="s2">&quot;console=tty1 debug verbose root=/dev/</span><span class="si">${</span><span class="nv">DEVICE</span><span class="si">}</span><span class="s2">2 rootwait ro&quot;</span>
+<span class="gp">#</span> vbutil_kernel --pack exynos5.kpart <span class="se">\</span>
+  --keyblock /usr/share/vboot/devkeys/kernel.keyblock <span class="se">\</span>
+  --version <span class="m">1</span> <span class="se">\</span>
+  --signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk <span class="se">\</span>
+  --config cmdline <span class="se">\</span>
+  --bootloader cmdline <span class="se">\</span>
+  --vmlinuz kernel.itb <span class="se">\</span>
+  --arch arm
+<span class="gp">#</span> dd <span class="k">if</span><span class="o">=</span>exynos5.kpart <span class="nv">of</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DEVICE</span><span class="si">}</span><span class="m">1</span>
+</pre></div></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_customisations">Customisations</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_make_conf">make.conf</h3>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="na">CFLAGS</span><span class="o">=</span><span class="s">&quot;-mfloat-abi=hard -mfpu=vfpv3-d16 -mtls-dialect=gnu -march=armv7ve -mtune=cortex-a15 -fstack-protector-strong&quot;</span>
+<span class="na">CPU_FLAGS_ARM</span><span class="o">=</span><span class="s">&quot;edsp neon thumb vfp vfpv3 vfpv4 vfp-d32 v4 v5 v6 v7 thumb2&quot;</span>
+</pre></div></div></div>
+</div>
+<div class="sect2">
+<h3 id="_wireless_networking">Wireless networking</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Driver: <code>MWIFIEX_SDIO</code>
+</p>
+</li>
+<li>
+<p>
+Firmware: <code>sd8797</code>
+</p>
+</li>
+<li>
+<p>
+Software
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>iw</code>
+</p>
+</li>
+<li>
+<p>
+<code>wpa_supplicant</code>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="paragraph"><p><code>/etc/wpa_supplicant/wpa_supplicant.conf</code>:</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="na">ctrl_interface</span><span class="o">=</span><span class="s">DIR=/var/run/wpa_supplicant GROUP=wheel</span>
+<span class="na">update_config</span><span class="o">=</span><span class="s">1</span>
+</pre></div></div></div>
+<div class="paragraph"><p>You can customise wpa_supplicant further or use wpa_cli as root or, if configured like above, as a user in the <em>wheel</em> group.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated
+ 2018-06-06 20:12:16 -00
+</div>
+</div>
+</body>
+</html>
