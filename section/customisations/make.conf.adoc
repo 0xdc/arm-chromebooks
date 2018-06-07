@@ -1,4 +1,5 @@
 === make.conf ===
 
+[source,cfg]
  CFLAGS="-mfloat-abi=hard -mfpu=vfpv3-d16 -mtls-dialect=gnu -march=armv7ve -mtune=cortex-a15 -fstack-protector-strong"
  CPU_FLAGS_ARM="edsp neon thumb vfp vfpv3 vfpv4 vfp-d32 v4 v5 v6 v7 thumb2"

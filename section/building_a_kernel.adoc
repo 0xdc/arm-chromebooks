@@ -11,10 +11,12 @@ Build requirements: `@system bc u-boot-tools vboot-utils dtc`
 
 ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.
 
+[source,console]
     # make zImage
     # make dtbs
     # make modules
 
+[source,c]
 ----
 /dts-v1/;
 / {
@@ -68,8 +70,9 @@ ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.
 };
 ----
 
+[source,console]
     # mkimage -f kernel.its kernel.itb
-    # tee cmdline <<<"console=tty1 debug verbose root=/dev/${DEVICE}3 rootwait ro init=/sbin/init"
+    # tee cmdline <<<"console=tty1 debug verbose root=/dev/${DEVICE}2 rootwait ro"
     # vbutil_kernel --pack exynos5.kpart \
       --keyblock /usr/share/vboot/devkeys/kernel.keyblock \
       --version 1 \

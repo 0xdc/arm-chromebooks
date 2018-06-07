@@ -1,3 +1,5 @@
+= HP Chromebook 11 G1 =
+
 include::section/installation_options.adoc[]
 
 include::section/hardware_support.adoc[]

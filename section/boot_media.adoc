@@ -4,7 +4,7 @@
 * SD card
 ** Samsung ARM Chromebook only
 ** Device is /dev/mmcblk1
-** Partitions are separated with 'p', e.g. /dev/mmcblk1p3
+** Partitions are separated with 'p', e.g. /dev/mmcblk1p2
 * USB storage
 ** Device is /dev/sda
 * Internal Storage
@@ -30,4 +30,15 @@ Depending on your partitioning tool, the type of the ChromeOS kernel partition m
 | fdisk | 66
 | gdisk | 7f00
 | https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs[*] | FE3A2A5D-4F32-41A7-B725-ACCC3285A309
+|===
+
+=== Booting with nv-u-boot ===
+
+[options="header"]
+|===
+| Partition number | Type | Size
+| 1 | ChromeOS kernel | ~1M
+| 2 | ChromeOS kernel | ~8M
+| 3 | ext2 | ~256M
+| 4 | ext4 | >3G
 |===

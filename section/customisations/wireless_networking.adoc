@@ -8,6 +8,7 @@
 
 `/etc/wpa_supplicant/wpa_supplicant.conf`:
 
+[source,cfg]
 ----
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=wheel
 update_config=1

@@ -1,3 +1,5 @@
+= Samsung ARM Chromebook =
+
 include::section/installation_options.adoc[]
 
 include::section/hardware_support.adoc[]
