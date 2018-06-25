@@ -1,5 +1,19 @@
 = Samsung ARM Chromebook =
 
+The Samsung ARM Chromebook is the first generation of 11.6 inch Chromebook laptops built by Samsung.
+
+The laptop features:
+
+include::section/common_specs.adoc[]
+* 11.6", 1366x768 (16:9 ratio), TN panel
+* One USB3 (Type-A) port
+* One USB2 (Type-A) port
+* One HDMI port
+* One SD card slot
+
+At the time of writing, the ChromeOS https://support.google.com/chrome/a/answer/6220366[Auto Update Expiry date] was
+July 2018.
+
 include::section/installation_options.adoc[]
 
 include::section/hardware_support.adoc[]
@@ -8,10 +22,10 @@ include::section/hardware_support/snow.adoc[]
 
 include::section/first_time_setup.adoc[]
 
-include::section/boot_media.adoc[]
-
 include::section/cross_compiler.adoc[]
 
 include::section/building_a_kernel.adoc[]
+
+include::section/boot_media.adoc[]
 
 include::section/customisations.adoc[]

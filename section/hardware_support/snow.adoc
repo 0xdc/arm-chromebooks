@@ -1,3 +1,9 @@
+=== Bootable ports ===
+
+Snow can boot from the USB2 port (the port closest to the HDMI port) and the SD card.
+
+Snow cannot boot from the USB3 port.
+
 === Snow revisions ===
 The XE303C12 has up to 5 revisions:
 

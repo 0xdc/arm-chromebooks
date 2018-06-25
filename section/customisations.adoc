@@ -3,3 +3,7 @@
 include::customisations/make.conf.adoc[]
 
 include::customisations/wireless_networking.adoc[]
+
+include::customisations/keyboard.adoc[]
+
+include::customisations/multi_format_codec.adoc[]

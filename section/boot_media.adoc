@@ -16,7 +16,7 @@ The minimum required partition layout is as follows:
 [options="header"]
 |===
 | Partition number | Type | Size
-| 1 | ChromeOS kernel | ~8M
+| 1 | ChromeOS kernel | +++~8M+++
 | 2 | ext4 | >3G
 |===
 
@@ -32,13 +32,29 @@ Depending on your partitioning tool, the type of the ChromeOS kernel partition m
 | https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs[*] | FE3A2A5D-4F32-41A7-B725-ACCC3285A309
 |===
 
-=== Booting with nv-u-boot ===
+=== Booting with nv-u-boot / upstream u-boot ===
+
+While the stock firmware is capable of booting custom Operating Systems, it can have a number of strange quirks:
+
+* updating a kernel requires overwriting a ChromeOS kernel partition, which (depending on your partition layout) may be limited in number, or cause your system to fail to boot
+* in addition to the configured kernel command line, the firmware prepends the string "console= cros_secure"
+** `console=` will disable kernel output during boot if it is not overridden in the cmdline
+** `cros_secure` is an identifier for how the kernel was loaded https://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format#TOC-Which-kernel-[]
+* embedded (e.g. ARM) developers may be more familiar with a u-boot environment to boot payloads
+
+Google provide a version called nv-u-boot that can be booted like any other ChromeOS kernel, that boots to a u-boot prompt. Upstream u-boot also contains support for these boards.
+
+The default nv-u-boot environment assumes a layout like this:
 
 [options="header"]
 |===
 | Partition number | Type | Size
-| 1 | ChromeOS kernel | ~1M
-| 2 | ChromeOS kernel | ~8M
-| 3 | ext2 | ~256M
+| 1 | ChromeOS kernel | +++~1M+++
+| 2 | ChromeOS kernel | +++~8M+++
+| 3 | ext2 | +++~256M+++
 | 4 | ext4 | >3G
 |===
+
+More info:
+
+* https://www.chromium.org/chromium-os/firmware-porting-guide/using-nv-u-boot-on-the-samsung-arm-chromebook

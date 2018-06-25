@@ -1,0 +1,3 @@
+=== Multi Format Codec (Hardware Video Encode/Decode Acceleration) ===
+
+Firmware: `s5p-mfc-v6.fw`

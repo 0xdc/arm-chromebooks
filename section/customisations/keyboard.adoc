@@ -1,0 +1,7 @@
+=== X11 ===
+`/etc/X11/xorg.conf.d/10-keyboard.conf`:
+
+[source,cfg]
+----
+include::10-keyboard.conf[]
+----

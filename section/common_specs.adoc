@@ -1,0 +1,3 @@
+* a dual-core Samsung Exynos5250 ARMv7-A (Cortex-A15) CPU with virtualisation extensions, clocked at 1.7GHz
+* 2GB RAM
+* 16GB eMMC flash
