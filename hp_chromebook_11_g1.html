@@ -799,13 +799,63 @@ asciidoc.install();
 <h1>HP Chromebook 11 G1</h1>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>The HP Chomebook 11 G1 is the first generation of 11.6 inch Chromebook laptops built by Hewlett-Packard, "Made with Google".</p></div>
+<div class="paragraph"><p>The laptop features:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+a dual-core Samsung Exynos5250 ARMv7-A (Cortex-A15) CPU with virtualisation extensions, clocked at 1.7GHz
+</p>
+</li>
+<li>
+<p>
+2GB RAM
+</p>
+</li>
+<li>
+<p>
+16GB eMMC flash
+</p>
+</li>
+<li>
+<p>
+11.6", 1366x768 (16:9 ratio), 200 nits, IPS panel
+</p>
+</li>
+<li>
+<p>
+Two USB3 (Type-A) ports
+</p>
+</li>
+<li>
+<p>
+microUSB charger (up to 3A)
+</p>
+</li>
+<li>
+<p>
+HDMI via Slimport
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>At the time of writing, the ChromeOS <a href="https://support.google.com/chrome/a/answer/6220366">Auto Update Expiry date</a> was
+October 2018.</p></div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_installation_options">Installation options</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>You need to have the Chromebook in developer mode to run a custom Linux distribution.</p></div>
-<div class="paragraph"><p>Developer mode includes a shell that can be used to install a Gentoo system to a USB drive (or SD card for the Samsung ARM Chromebook). Once unpacked, you can chroot into the environment to customise it.</p></div>
-<div class="paragraph"><p>By default, most of the ChromeOS filesystem is mounted read-only. While it is possible to make more of the system writable and persistant, locations such as <code>/home</code> and <code>/mnt/stateful_partition</code> are already writable.</p></div>
-<div class="paragraph"><p>If you have a prepared stage4, or are willing to build upon the upstream stage3, a bootable disk can be prepared from another machine.</p></div>
+<div class="paragraph"><p>Developer mode includes a shell that can be used to install a Gentoo system
+to a USB drive (or SD card for the Samsung ARM Chromebook).</p></div>
+<div class="paragraph"><p>By default, most of the ChromeOS filesystem is mounted read-only.
+While it is possible to make more of the system writable and persistant,
+locations such as <code>/home</code> and <code>/mnt/stateful_partition</code> are already writable.</p></div>
+<div class="paragraph"><p>If you have a prepared stage4, or are willing to build upon the upstream stage3,
+a bootable disk can be prepared from another machine.
+Once unpacked, you can chroot into the environment to customise it.</p></div>
 </div>
 </div>
 <div class="sect1">
@@ -942,6 +992,174 @@ cellspacing="0" cellpadding="4">
 </div>
 </div>
 <div class="sect1">
+<h2 id="_cross_compiling">Cross-compiling</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre><code># crossdev -S -t armv7a-hardfloat-linux-gnueabi</code></pre>
+</div></div>
+<div class="paragraph"><p>When building the kernel, set the following environment variables:</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="na">ARCH</span><span class="o">=</span><span class="s">arm</span>
+<span class="na">CROSS_COMPILE</span><span class="o">=</span><span class="s">armv7a-hardfloat-linux-gnueabi-</span>
+</pre></div></div></div>
+<div class="sect2">
+<h3 id="_qemu_user_mode_emulation">qemu user-mode emulation</h3>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge --buildpkg -a qemu<span class="o">[</span>static-user,qemu_user_targets_arm<span class="o">]</span>
+<span class="gp">#</span> mkdir stage3-armv7a
+<span class="gp">#</span> tar xf stage3-armv7a_hardfp-latest.tar.bz2 -C stage3-armv7a
+<span class="gp">#</span> <span class="nv">ROOT</span><span class="o">=</span>stage3-armv7a emerge --nodeps --oneshot --usepkgonly qemu
+</pre></div></div></div>
+<div class="paragraph"><p>Because arm has a variety of possible CPU emulations, you will need to use a wrapper script to customise the CPU.</p></div>
+<div class="paragraph"><p>I recommend unpacking qemu into its own directory and copying that prepared directory into any arm chroots that you need (if you need a lot).</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nv">ROOT</span><span class="o">=</span>qemu emerge --nodeps --oneshot --usepkgonly qemu
+<span class="gp">#</span> <span class="nb">cd</span> qemu
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * pass arguments to qemu binary</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">char</span> <span class="o">*</span><span class="n">newargv</span><span class="p">[</span><span class="n">argc</span> <span class="o">+</span> <span class="mi">3</span><span class="p">];</span>
+
+        <span class="n">newargv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="n">newargv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;-cpu&quot;</span><span class="p">;</span>
+        <span class="n">newargv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;cortex-a15&quot;</span><span class="p">;</span>
+
+        <span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">newargv</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">argc</span> <span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+        <span class="n">newargv</span><span class="p">[</span><span class="n">argc</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">execve</span><span class="p">(</span><span class="s">&quot;/usr/bin/qemu-arm&quot;</span><span class="p">,</span> <span class="n">newargv</span><span class="p">,</span> <span class="n">envp</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> gcc -static qemu-wrapper.c -O3 -s -o qemu-wrapper
+<span class="gp">#</span> <span class="nb">cd</span> ..
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s1">&#39;:arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/qemu-wrapper:&#39;</span> &gt; /proc/sys/fs/binfmt_misc/register
+<span class="gp">#</span> rsync -a qemu/ stage3-armv7a
+</pre></div></div></div>
+<div class="paragraph"><p>You can then chroot, pychroot or systemd-nspawn as normal.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_a_kernel">Building a kernel</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Build requirements: <code>@system bc u-boot-tools vboot-utils dtc</code></p></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Kernel version </th>
+<th align="left" valign="top"> Samsung </th>
+<th align="left" valign="top"> HP </th>
+<th align="left" valign="top"> config command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git">linux-4.14.y</a></p></td>
+<td align="left" valign="top"><p class="table"><strong>Yes</strong></p></td>
+<td align="left" valign="top"><p class="table">No</p></td>
+<td align="left" valign="top"><p class="table"><code>make exynos_defconfig</code></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><a href="https://chromium.googlesource.com/chromiumos/third_party/kernel/">chromeos-3.8</a></p></td>
+<td align="left" valign="top"><p class="table">Yes</p></td>
+<td align="left" valign="top"><p class="table"><strong>Yes</strong> (gcc-5.4.0-r4)</p></td>
+<td align="left" valign="top"><p class="table"><code>./chromeos/scripts/prepareconfig chromeos-exynos5</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> make zImage
+<span class="gp">#</span> make dtbs
+<span class="gp">#</span> make modules
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">dts</span><span class="o">-</span><span class="n">v1</span><span class="o">/</span><span class="p">;</span>
+<span class="o">/</span> <span class="p">{</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Chrome OS kernel image with one or more FDT blobs&quot;</span><span class="p">;</span>
+        <span class="cp">#address-cells = <b>&lt;1&gt;</b>;</span>
+        <span class="n">images</span> <span class="p">{</span>
+                <span class="n">kernel</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;kernel&quot;</span><span class="p">;</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;arch/arm/boot/zImage&quot;</span><span class="p">);</span>
+                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;kernel_noload&quot;</span><span class="p">;</span>
+                        <span class="n">arch</span> <span class="o">=</span> <span class="s">&quot;arm&quot;</span><span class="p">;</span>
+                        <span class="n">os</span> <span class="o">=</span> <span class="s">&quot;linux&quot;</span><span class="p">;</span>
+                        <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+                        <span class="n">load</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">entry</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="p">};</span>
+                <span class="n">fdt</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;exynos5250-snow.dtb&quot;</span><span class="p">;</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;arch/arm/boot/dts/exynos5250-snow.dtb&quot;</span><span class="p">);</span>
+                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;flat_dt&quot;</span><span class="p">;</span>
+                        <span class="n">arch</span> <span class="o">=</span> <span class="s">&quot;arm&quot;</span><span class="p">;</span>
+                        <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+                        <span class="n">hash</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                                <span class="n">algo</span> <span class="o">=</span> <span class="s">&quot;sha1&quot;</span><span class="p">;</span>
+                        <span class="p">};</span>
+                <span class="p">};</span>
+                <span class="n">fdt</span><span class="err">@</span><span class="mi">2</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;exynos5250-spring.dtb&quot;</span><span class="p">;</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;arch/arm/boot/dts/exynos5250-spring.dtb&quot;</span><span class="p">);</span>
+                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;flat_dt&quot;</span><span class="p">;</span>
+                        <span class="n">arch</span> <span class="o">=</span> <span class="s">&quot;arm&quot;</span><span class="p">;</span>
+                        <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+                        <span class="n">hash</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                                <span class="n">algo</span> <span class="o">=</span> <span class="s">&quot;sha1&quot;</span><span class="p">;</span>
+                        <span class="p">};</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+        <span class="n">configurations</span> <span class="p">{</span>
+                <span class="k">default</span> <span class="o">=</span> <span class="s">&quot;conf@1&quot;</span><span class="p">;</span>
+                <span class="n">conf</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;snow&quot;</span><span class="p">;</span>
+                        <span class="n">kernel</span> <span class="o">=</span> <span class="s">&quot;kernel@1&quot;</span><span class="p">;</span>
+                        <span class="n">fdt</span> <span class="o">=</span> <span class="s">&quot;fdt@1&quot;</span><span class="p">;</span>
+                <span class="p">};</span>
+                <span class="n">conf</span><span class="err">@</span><span class="mi">2</span><span class="p">{</span>
+                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;spring&quot;</span><span class="p">;</span>
+                        <span class="n">kernel</span> <span class="o">=</span> <span class="s">&quot;kernel@1&quot;</span><span class="p">;</span>
+                        <span class="n">fdt</span> <span class="o">=</span> <span class="s">&quot;fdt@2&quot;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+</pre></div></div></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> mkimage -f kernel.its kernel.itb
+<span class="gp">#</span> tee cmdline <span class="o">&lt;&lt;&lt;</span><span class="s2">&quot;console=tty1 debug verbose root=/dev/</span><span class="si">${</span><span class="nv">DEVICE</span><span class="si">}</span><span class="s2">2 rootwait ro&quot;</span>
+<span class="gp">#</span> vbutil_kernel --pack exynos5.kpart <span class="se">\</span>
+  --keyblock /usr/share/vboot/devkeys/kernel.keyblock <span class="se">\</span>
+  --version <span class="m">1</span> <span class="se">\</span>
+  --signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk <span class="se">\</span>
+  --config cmdline <span class="se">\</span>
+  --bootloader cmdline <span class="se">\</span>
+  --vmlinuz kernel.itb <span class="se">\</span>
+  --arch arm
+<span class="gp">#</span> dd <span class="k">if</span><span class="o">=</span>exynos5.kpart <span class="nv">of</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DEVICE</span><span class="si">}</span><span class="m">1</span>
+</pre></div></div></div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_prepare_installation_media">Prepare installation media</h2>
 <div class="sectionbody">
 <div class="ulist"><ul>
@@ -1064,7 +1282,39 @@ cellspacing="0" cellpadding="4">
 </table>
 </div>
 <div class="sect2">
-<h3 id="_booting_with_nv_u_boot">Booting with nv-u-boot</h3>
+<h3 id="_booting_with_nv_u_boot_upstream_u_boot">Booting with nv-u-boot / upstream u-boot</h3>
+<div class="paragraph"><p>While the stock firmware is capable of booting custom Operating Systems, it can have a number of strange quirks:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+updating a kernel requires overwriting a ChromeOS kernel partition, which (depending on your partition layout) may be limited in number, or cause your system to fail to boot
+</p>
+</li>
+<li>
+<p>
+in addition to the configured kernel command line, the firmware prepends the string "console= cros_secure"
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>console=</code> will disable kernel output during boot if it is not overridden in the cmdline
+</p>
+</li>
+<li>
+<p>
+<code>cros_secure</code> is an identifier for how the kernel was loaded <a href="https://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format#TOC-Which-kernel-">https://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format#TOC-Which-kernel-</a>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+embedded (e.g. ARM) developers may be more familiar with a u-boot environment to boot payloads
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Google provide a version called nv-u-boot that can be booted like any other ChromeOS kernel, that boots to a u-boot prompt. Upstream u-boot also contains support for these boards.</p></div>
+<div class="paragraph"><p>The default nv-u-boot environment assumes a layout like this:</p></div>
 <div class="tableblock">
 <table rules="all"
 width="100%"
@@ -1104,175 +1354,15 @@ cellspacing="0" cellpadding="4">
 </tbody>
 </table>
 </div>
+<div class="paragraph"><p>More info:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://www.chromium.org/chromium-os/firmware-porting-guide/using-nv-u-boot-on-the-samsung-arm-chromebook">https://www.chromium.org/chromium-os/firmware-porting-guide/using-nv-u-boot-on-the-samsung-arm-chromebook</a>
+</p>
+</li>
+</ul></div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_cross_compiling">Cross-compiling</h2>
-<div class="sectionbody">
-<div class="literalblock">
-<div class="content">
-<pre><code># crossdev -S -t armv7a-hardfloat-linux-gnueabi</code></pre>
-</div></div>
-<div class="paragraph"><p>When building the kernel, set the following environment variables:</p></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span></span><span class="na">ARCH</span><span class="o">=</span><span class="s">arm</span>
-<span class="na">CROSS_COMPILE</span><span class="o">=</span><span class="s">armv7a-hardfloat-linux-gnueabi-</span>
-</pre></div></div></div>
-<div class="sect2">
-<h3 id="_qemu_user_mode_emulation">qemu user-mode emulation</h3>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> emerge --buildpkg -a qemu<span class="o">[</span>static-user,qemu_user_targets_arm<span class="o">]</span>
-<span class="gp">#</span> mkdir stage3-armv7a
-<span class="gp">#</span> tar xf stage3-armv7a_hardfp-latest.tar.bz2 -C stage3-armv7a
-<span class="gp">#</span> <span class="nv">ROOT</span><span class="o">=</span>stage3-armv7a emerge --nodeps --oneshot --usepkgonly qemu
-</pre></div></div></div>
-<div class="paragraph"><p>Because arm has a variety of possible CPU emulations, you will need to use a wrapper script to customise the CPU.</p></div>
-<div class="paragraph"><p>I recommend unpacking qemu into its own directory and copying that prepared directory into any arm chroots that you need (if you need a lot).</p></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nv">ROOT</span><span class="o">=</span>qemu emerge --nodeps --oneshot --usepkgonly qemu
-<span class="gp">#</span> <span class="nb">cd</span> qemu
-</pre></div></div></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span></span><span class="cm">/*</span>
-<span class="cm"> * pass arguments to qemu binary</span>
-<span class="cm"> */</span>
-
-<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">char</span> <span class="o">*</span><span class="n">newargv</span><span class="p">[</span><span class="n">argc</span> <span class="o">+</span> <span class="mi">3</span><span class="p">];</span>
-
-        <span class="n">newargv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-        <span class="n">newargv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;-cpu&quot;</span><span class="p">;</span>
-        <span class="n">newargv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;cortex-a15&quot;</span><span class="p">;</span>
-
-        <span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">newargv</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">argc</span> <span class="o">-</span><span class="mi">1</span><span class="p">));</span>
-        <span class="n">newargv</span><span class="p">[</span><span class="n">argc</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">execve</span><span class="p">(</span><span class="s">&quot;/usr/bin/qemu-arm&quot;</span><span class="p">,</span> <span class="n">newargv</span><span class="p">,</span> <span class="n">envp</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div></div></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> gcc -static qemu-wrapper.c -O3 -s -o qemu-wrapper
-<span class="gp">#</span> <span class="nb">cd</span> ..
-</pre></div></div></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">echo</span> <span class="s1">&#39;:arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/qemu-wrapper:&#39;</span> &gt; /proc/sys/fs/binfmt_misc/register
-<span class="gp">#</span> rsync -a qemu/ stage3-armv7a
-</pre></div></div></div>
-<div class="paragraph"><p>You can then chroot, pychroot or systemd-nspawn as normal.</p></div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_building_a_kernel">Building a kernel</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>Build requirements: <code>@system bc u-boot-tools vboot-utils dtc</code></p></div>
-<div class="tableblock">
-<table rules="all"
-width="100%"
-frame="border"
-cellspacing="0" cellpadding="4">
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<thead>
-<tr>
-<th align="left" valign="top"> Kernel version </th>
-<th align="left" valign="top"> Samsung </th>
-<th align="left" valign="top"> HP </th>
-<th align="left" valign="top"> config command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left" valign="top"><p class="table"><a href="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git">linux-4.14.y</a></p></td>
-<td align="left" valign="top"><p class="table"><strong>Yes</strong></p></td>
-<td align="left" valign="top"><p class="table">No</p></td>
-<td align="left" valign="top"><p class="table"><code>make exynos_defconfig</code></p></td>
-</tr>
-<tr>
-<td align="left" valign="top"><p class="table"><a href="https://chromium.googlesource.com/chromiumos/third_party/kernel/">chromeos-3.8</a></p></td>
-<td align="left" valign="top"><p class="table">Yes</p></td>
-<td align="left" valign="top"><p class="table"><strong>Yes</strong></p></td>
-<td align="left" valign="top"><p class="table"><code>./chromeos/scripts/prepareconfig chromeos-exynos5</code></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="paragraph"><p>ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.</p></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> make zImage
-<span class="gp">#</span> make dtbs
-<span class="gp">#</span> make modules
-</pre></div></div></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">dts</span><span class="o">-</span><span class="n">v1</span><span class="o">/</span><span class="p">;</span>
-<span class="o">/</span> <span class="p">{</span>
-        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Chrome OS kernel image with one or more FDT blobs&quot;</span><span class="p">;</span>
-        <span class="cp">#address-cells = <b>&lt;1&gt;</b>;</span>
-        <span class="n">images</span> <span class="p">{</span>
-                <span class="n">kernel</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
-                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;kernel&quot;</span><span class="p">;</span>
-                        <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;arch/arm/boot/zImage&quot;</span><span class="p">);</span>
-                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;kernel_noload&quot;</span><span class="p">;</span>
-                        <span class="n">arch</span> <span class="o">=</span> <span class="s">&quot;arm&quot;</span><span class="p">;</span>
-                        <span class="n">os</span> <span class="o">=</span> <span class="s">&quot;linux&quot;</span><span class="p">;</span>
-                        <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
-                        <span class="n">load</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
-                        <span class="n">entry</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
-                <span class="p">};</span>
-                <span class="n">fdt</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
-                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;exynos5250-snow.dtb&quot;</span><span class="p">;</span>
-                        <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;arch/arm/boot/dts/exynos5250-snow.dtb&quot;</span><span class="p">);</span>
-                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;flat_dt&quot;</span><span class="p">;</span>
-                        <span class="n">arch</span> <span class="o">=</span> <span class="s">&quot;arm&quot;</span><span class="p">;</span>
-                        <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
-                        <span class="n">hash</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
-                                <span class="n">algo</span> <span class="o">=</span> <span class="s">&quot;sha1&quot;</span><span class="p">;</span>
-                        <span class="p">};</span>
-                <span class="p">};</span>
-                <span class="n">fdt</span><span class="err">@</span><span class="mi">2</span><span class="p">{</span>
-                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;exynos5250-spring.dtb&quot;</span><span class="p">;</span>
-                        <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;arch/arm/boot/dts/exynos5250-spring.dtb&quot;</span><span class="p">);</span>
-                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;flat_dt&quot;</span><span class="p">;</span>
-                        <span class="n">arch</span> <span class="o">=</span> <span class="s">&quot;arm&quot;</span><span class="p">;</span>
-                        <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
-                        <span class="n">hash</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
-                                <span class="n">algo</span> <span class="o">=</span> <span class="s">&quot;sha1&quot;</span><span class="p">;</span>
-                        <span class="p">};</span>
-                <span class="p">};</span>
-        <span class="p">};</span>
-        <span class="n">configurations</span> <span class="p">{</span>
-                <span class="k">default</span> <span class="o">=</span> <span class="s">&quot;conf@1&quot;</span><span class="p">;</span>
-                <span class="n">conf</span><span class="err">@</span><span class="mi">1</span><span class="p">{</span>
-                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;snow&quot;</span><span class="p">;</span>
-                        <span class="n">kernel</span> <span class="o">=</span> <span class="s">&quot;kernel@1&quot;</span><span class="p">;</span>
-                        <span class="n">fdt</span> <span class="o">=</span> <span class="s">&quot;fdt@1&quot;</span><span class="p">;</span>
-                <span class="p">};</span>
-                <span class="n">conf</span><span class="err">@</span><span class="mi">2</span><span class="p">{</span>
-                        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;spring&quot;</span><span class="p">;</span>
-                        <span class="n">kernel</span> <span class="o">=</span> <span class="s">&quot;kernel@1&quot;</span><span class="p">;</span>
-                        <span class="n">fdt</span> <span class="o">=</span> <span class="s">&quot;fdt@2&quot;</span><span class="p">;</span>
-                <span class="p">};</span>
-        <span class="p">};</span>
-<span class="p">};</span>
-</pre></div></div></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> mkimage -f kernel.its kernel.itb
-<span class="gp">#</span> tee cmdline <span class="o">&lt;&lt;&lt;</span><span class="s2">&quot;console=tty1 debug verbose root=/dev/</span><span class="si">${</span><span class="nv">DEVICE</span><span class="si">}</span><span class="s2">2 rootwait ro&quot;</span>
-<span class="gp">#</span> vbutil_kernel --pack exynos5.kpart <span class="se">\</span>
-  --keyblock /usr/share/vboot/devkeys/kernel.keyblock <span class="se">\</span>
-  --version <span class="m">1</span> <span class="se">\</span>
-  --signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk <span class="se">\</span>
-  --config cmdline <span class="se">\</span>
-  --bootloader cmdline <span class="se">\</span>
-  --vmlinuz kernel.itb <span class="se">\</span>
-  --arch arm
-<span class="gp">#</span> dd <span class="k">if</span><span class="o">=</span>exynos5.kpart <span class="nv">of</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DEVICE</span><span class="si">}</span><span class="m">1</span>
-</pre></div></div></div>
 </div>
 </div>
 <div class="sect1">
@@ -1295,7 +1385,7 @@ Driver: <code>MWIFIEX_SDIO</code>
 </li>
 <li>
 <p>
-Firmware: <code>sd8797</code>
+Firmware: <code>mrvl/sd8797_uapsta.bin</code>
 </p>
 </li>
 <li>
@@ -1323,6 +1413,23 @@ Software
 </pre></div></div></div>
 <div class="paragraph"><p>You can customise wpa_supplicant further or use wpa_cli as root or, if configured like above, as a user in the <em>wheel</em> group.</p></div>
 </div>
+<div class="sect2">
+<h3 id="_x11">X11</h3>
+<div class="paragraph"><p><code>/etc/X11/xorg.conf.d/10-keyboard.conf</code>:</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="na">Section &quot;InputClass&quot;</span>
+        <span class="na">Identifier &quot;Keyboard&quot;</span>
+        <span class="na">MatchProduct &quot;cros-ec-i2c&quot; #XXX: Confirm product name</span>
+        <span class="na">MatchIsKeyboard &quot;on&quot;</span>
+        <span class="na">Option &quot;XkbLayout&quot; &quot;gb&quot;</span>
+        <span class="na">Option &quot;XkbModel&quot; &quot;chromebook&quot;</span>
+<span class="na">EndSection</span>
+</pre></div></div></div>
+</div>
+<div class="sect2">
+<h3 id="_multi_format_codec_hardware_video_encode_decode_acceleration">Multi Format Codec (Hardware Video Encode/Decode Acceleration)</h3>
+<div class="paragraph"><p>Firmware: <code>s5p-mfc-v6.fw</code></p></div>
+</div>
 </div>
 </div>
 </div>
@@ -1330,7 +1437,7 @@ Software
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2018-06-06 20:12:07 -00
+ 2018-06-08 09:04:32 -00
 </div>
 </div>
 </body>
