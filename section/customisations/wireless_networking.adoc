@@ -10,8 +10,7 @@
 
 [source,cfg]
 ----
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=wheel
-update_config=1
+include::wpa_supplicant.conf[]
 ----
 
 You can customise wpa_supplicant further or use wpa_cli as root or, if configured like above, as a user in the 'wheel' group.
