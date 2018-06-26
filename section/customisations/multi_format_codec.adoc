@@ -1,3 +1,10 @@
 === Multi Format Codec (Hardware Video Encode/Decode Acceleration) ===
 
+CAUTION: This has not been tested by the author and is here for reference
+
+The Samsung SoC contains a hardware accelerated video encoder and decoder which requires a firmware blob and compatible software.
+
 Firmware: `s5p-mfc-v6.fw`
+
+* https://www.kernel.org/doc/Documentation/devicetree/bindings/media/s5p-mfc.txt
+* https://s-opensource.org/2016/09/01/video-decoding-exynos-multi-format-codec-gstreamer/
