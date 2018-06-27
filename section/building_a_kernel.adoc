@@ -4,12 +4,14 @@ Build requirements: `@system bc u-boot-tools vboot-utils dtc`
 
 [options="header"]
 |===
-| Kernel version | Samsung | HP | config command
+| Kernel version | Snow (Samsung) | Spring (HP) | config command
 | https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git[linux-4.14.y] | **Yes** | No | `make exynos_defconfig`
 | https://chromium.googlesource.com/chromiumos/third_party/kernel/[chromeos-3.8] | Yes | **Yes** (gcc-5.4.0-r4) | `./chromeos/scripts/prepareconfig chromeos-exynos5`
 |===
 
-ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.
+NOTE: ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.
+
+WARNING: However, a ChromeOS kernel built with 6.4.0 does not boot correctly (or at all?)
 
 [source,console]
     # make zImage
