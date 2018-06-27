@@ -1065,8 +1065,8 @@ cellspacing="0" cellpadding="4">
 <thead>
 <tr>
 <th align="left" valign="top"> Kernel version </th>
-<th align="left" valign="top"> Samsung </th>
-<th align="left" valign="top"> HP </th>
+<th align="left" valign="top"> Snow (Samsung) </th>
+<th align="left" valign="top"> Spring (HP) </th>
 <th align="left" valign="top"> config command</th>
 </tr>
 </thead>
@@ -1086,7 +1086,22 @@ cellspacing="0" cellpadding="4">
 </tbody>
 </table>
 </div>
-<div class="paragraph"><p>ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">However, a ChromeOS kernel built with 6.4.0 does not boot correctly (or at all?)</td>
+</tr></table>
+</div>
 <div class="listingblock">
 <div class="content"><div class="highlight"><pre><span></span><span class="gp">#</span> make zImage
 <span class="gp">#</span> make dtbs
@@ -1428,7 +1443,28 @@ Software
 </div>
 <div class="sect2">
 <h3 id="_multi_format_codec_hardware_video_encode_decode_acceleration">Multi Format Codec (Hardware Video Encode/Decode Acceleration)</h3>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">This has not been tested by the author and is here for reference</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>The Samsung SoC contains a hardware accelerated video encoder and decoder which requires a firmware blob and compatible software.</p></div>
 <div class="paragraph"><p>Firmware: <code>s5p-mfc-v6.fw</code></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://www.kernel.org/doc/Documentation/devicetree/bindings/media/s5p-mfc.txt">https://www.kernel.org/doc/Documentation/devicetree/bindings/media/s5p-mfc.txt</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://s-opensource.org/2016/09/01/video-decoding-exynos-multi-format-codec-gstreamer/">https://s-opensource.org/2016/09/01/video-decoding-exynos-multi-format-codec-gstreamer/</a>
+</p>
+</li>
+</ul></div>
 </div>
 </div>
 </div>
