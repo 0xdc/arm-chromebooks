@@ -7,8 +7,9 @@ The laptop features:
 include::section/common_specs.adoc[]
 * 11.6", 1366x768 (16:9 ratio), 200 nits, IPS panel
 * Two USB3 (Type-A) ports
-* microUSB charger (up to 3A)
-* HDMI via Slimport
+* One microUSB port
+** charger (up to 3A)
+** HDMI via 5-pin Slimport
 
 At the time of writing, the ChromeOS https://support.google.com/chrome/a/answer/6220366[Auto Update Expiry date] was
 October 2018.
