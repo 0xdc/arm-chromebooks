@@ -1,4 +1,5 @@
 all: \
+	index.html \
 	samsung_arm_chromebook.html \
 	samsung_arm_chromebook.wiki \
 	hp_chromebook_11_g1.html \

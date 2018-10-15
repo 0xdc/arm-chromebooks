@@ -29,3 +29,5 @@ include::section/building_a_kernel.adoc[]
 include::section/boot_media.adoc[]
 
 include::section/customisations.adoc[]
+
+link:index.html[]
