@@ -7,10 +7,10 @@ all: \
 sections = $(shell find section -type f)
 
 %.html: %.adoc $(sections)
-	asciidoc -a pygments $<
+	asciidoc -a pygments -a $< $<
 
 %.xml: %.adoc $(sections)
-	a2x -f docbook $<
+	a2x -f docbook -a $< $<
 
 %.wiki: %.xml
 	pandoc -t mediawiki -f docbook $< -o $@

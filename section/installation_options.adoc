@@ -3,7 +3,9 @@
 You need to have the Chromebook in developer mode to run a custom Linux distribution.
 
 Developer mode includes a shell that can be used to install a Gentoo system
-to a USB drive (or SD card for the Samsung ARM Chromebook).
+to a USB
+ifdef::samsung_arm_chromebook.adoc[drive (or SD card for the Samsung ARM Chromebook).]
+ifndef::samsung_arm_chromebook.adoc[drive.]
 
 By default, most of the ChromeOS filesystem is mounted read-only.
 While it is possible to make more of the system writable and persistant,
