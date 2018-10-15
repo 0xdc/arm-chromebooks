@@ -28,4 +28,6 @@ include::section/boot_media.adoc[]
 
 include::section/customisations.adoc[]
 
+ifndef::wiki[]
 link:index.html[]
+endif::wiki[]

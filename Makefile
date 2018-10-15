@@ -11,7 +11,7 @@ sections = $(shell find section -type f)
 	asciidoc -a pygments -a $< $<
 
 %.xml: %.adoc $(sections)
-	a2x -f docbook -a $< $<
+	a2x -f docbook -a $< -a wiki $<
 
 %.wiki: %.xml
 	pandoc -t mediawiki -f docbook $< -o $@
