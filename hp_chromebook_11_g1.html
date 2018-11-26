@@ -929,7 +929,8 @@ cellspacing="0" cellpadding="4">
 <div class="content">
 <pre><code># enable_dev_usb_boot</code></pre>
 </div></div>
-<div class="paragraph"><p>Once set, operating systems can be booted from an SD card or USB storage device by pressing <code>Ctrl-U</code> on the startup warning screen.</p></div>
+<div class="paragraph"><p>Once set, operating systems can be booted from
+USB storage device by pressing <code>Ctrl-U</code> on the startup warning screen.</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -1011,6 +1012,7 @@ cellspacing="0" cellpadding="4">
 <div class="content"><div class="highlight"><pre><span></span><span class="na">ARCH</span><span class="o">=</span><span class="s">arm</span>
 <span class="na">CROSS_COMPILE</span><span class="o">=</span><span class="s">armv7a-hardfloat-linux-gnueabi-</span>
 </pre></div></div></div>
+<div class="paragraph"><p>To change the version of gcc to install, pass the flag <code>--gcc &lt;version&gt;</code>. See <code>crossdev --help</code>.</p></div>
 <div class="sect2">
 <h3 id="_qemu_user_mode_emulation">qemu user-mode emulation</h3>
 <div class="listingblock">
@@ -1099,7 +1101,7 @@ cellspacing="0" cellpadding="4">
 <td class="icon">
 <div class="title">Note</div>
 </td>
-<td class="content">ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.</td>
+<td class="content">ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4, 6.4.0 and 7.3.0.</td>
 </tr></table>
 </div>
 <div class="admonitionblock">
@@ -1107,7 +1109,7 @@ cellspacing="0" cellpadding="4">
 <td class="icon">
 <div class="title">Warning</div>
 </td>
-<td class="content">However, a ChromeOS kernel built with 6.4.0 does not boot correctly (or at all?)</td>
+<td class="content">However, a ChromeOS 3.8 kernel must be built with 5.4.0-r4.</td>
 </tr></table>
 </div>
 <div class="listingblock">
@@ -1190,28 +1192,6 @@ cellspacing="0" cellpadding="4">
 <p>
 GPT partition table
 </p>
-</li>
-<li>
-<p>
-SD card
-</p>
-<div class="ulist"><ul>
-<li>
-<p>
-Samsung ARM Chromebook only
-</p>
-</li>
-<li>
-<p>
-Device is /dev/mmcblk1
-</p>
-</li>
-<li>
-<p>
-Partitions are separated with <em>p</em>, e.g. /dev/mmcblk1p2
-</p>
-</li>
-</ul></div>
 </li>
 <li>
 <p>
@@ -1473,6 +1453,60 @@ Software
 </p>
 </li>
 </ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting">Troubleshooting</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_doesn_8217_t_boot_from_usb">Doesn&#8217;t boot from USB</h3>
+<div class="paragraph"><p>USB sticks can have different "modes" that enable feature detection.
+The HP Chomebook 11 seems to have difficulty booting from some USB devices.</p></div>
+<div class="paragraph"><p>One way to check that the USB is not being booted is if the GPT attributes are
+not being decremented. Set your partitions to Priority=15,Tries=15,Successful=0.
+After every boot, Tries should decrease by one every time the laptop beeps.</p></div>
+<div class="paragraph"><p>Check dmesg when plugging in a USB stick into a Linux computer (or chromeOS&#8217;s
+chrome://system dmesg).</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Bootable USB: <code>Mode Sense: 23 00 00 00</code>
+</p>
+</li>
+<li>
+<p>
+Unbootable USB: <code>Mode Sense: 43 00 00 00</code>
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_blank_screen_on_boot">Blank screen on boot</h3>
+<div class="paragraph"><p>If you are building the chromiumOS kernel (3.8.11) source with gcc 6.4.0, when
+booting the kernel the screen will stay lit but blank.</p></div>
+<div class="paragraph"><p>Build the kernel with gcc 5.4.0-r4.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_kernel_modules_won_8217_t_load">Kernel modules won&#8217;t load</h3>
+<div class="paragraph"><p>If you are building a kernel with gcc 7.3.0-r3 and can&#8217;t load modules
+with <code>modprobe</code>, and <code>dmesg</code> mentions:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>Unknown symbol _GLOBAL_OFFSET_TABLE_ (err 0)</code></pre>
+</div></div>
+<div class="paragraph"><p>Build the kernel with gcc 5.4.0-r4.</p></div>
+<div class="paragraph"><p>A message regarding Chromium LSM module locking is probably a red herring,
+but you can disable module locking with the kernel command line:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>lsm.module_locking=0</code></pre>
+</div></div>
+<div class="paragraph"><p>or by disabling the sysctl during runtime:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code># tee /proc/sys/kernel/chromium/module_locking &lt;&lt;&lt;0</code></pre>
+</div></div>
 <div class="paragraph"><p><a href="index.html">index.html</a></p></div>
 </div>
 </div>
@@ -1482,7 +1516,7 @@ Software
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2018-10-15 09:35:53 -00
+ 2018-11-26 20:32:24 -00
 </div>
 </div>
 </body>
