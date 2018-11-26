@@ -9,9 +9,9 @@ Build requirements: `@system bc u-boot-tools vboot-utils dtc`
 | https://chromium.googlesource.com/chromiumos/third_party/kernel/[chromeos-3.8] | Yes | **Yes** (gcc-5.4.0-r4) | `./chromeos/scripts/prepareconfig chromeos-exynos5`
 |===
 
-NOTE: ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4 and 6.4.0.
+NOTE: ChromeOS 3.8 requires additional patches for gcc 4.9.4, 5.4.0-r4, 6.4.0 and 7.3.0.
 
-WARNING: However, a ChromeOS kernel built with 6.4.0 does not boot correctly (or at all?)
+WARNING: However, a ChromeOS 3.8 kernel must be built with 5.4.0-r4.
 
 [source,console]
     # make zImage
