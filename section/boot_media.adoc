@@ -1,10 +1,12 @@
 == Prepare installation media ==
 
 * GPT partition table
+ifdef::samsung_arm_chromebook.adoc[]
 * SD card
 ** Samsung ARM Chromebook only
 ** Device is /dev/mmcblk1
 ** Partitions are separated with 'p', e.g. /dev/mmcblk1p2
+endif::[]
 * USB storage
 ** Device is /dev/sda
 * Internal Storage

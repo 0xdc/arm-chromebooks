@@ -11,7 +11,9 @@ Once rebooted, enable `dev_usb_boot=1` with:
 
     # enable_dev_usb_boot
 
-Once set, operating systems can be booted from an SD card or USB storage device by pressing `Ctrl-U` on the startup warning screen.
+Once set, operating systems can be booted from
+ifdef::samsung_arm_chromebook.adoc[an SD card or]
+USB storage device by pressing `Ctrl-U` on the startup warning screen.
 
 TIP: If you want the Chromebook in Developer Mode but not run a custom kernel (e.g. crouton, which isn't covered here), set `dev_boot_signed_only=1` with `crossystem`.
 
