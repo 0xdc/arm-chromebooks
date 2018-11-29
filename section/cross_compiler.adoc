@@ -2,6 +2,8 @@
 
     # crossdev -S -t armv7a-hardfloat-linux-gnueabi
 
+To change the version of gcc to install, pass the flag `--gcc <version>`. See `crossdev --help`.
+
 When building the kernel, set the following environment variables:
 
 [source,cfg]
@@ -9,8 +11,6 @@ When building the kernel, set the following environment variables:
 ARCH=arm
 CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi-
 -------
-
-To change the version of gcc to install, pass the flag `--gcc <version>`. See `crossdev --help`.
 
 === qemu user-mode emulation ===
 
