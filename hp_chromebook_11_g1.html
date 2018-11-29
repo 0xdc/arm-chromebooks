@@ -942,7 +942,11 @@ USB storage device by pressing <code>Ctrl-U</code> on the startup warning screen
 </div>
 <div class="sect2">
 <h3 id="_getting_a_shell">Getting a shell</h3>
-<div class="paragraph"><p>You can access a console window by pressing Ctrl+Alt+F2. The top row of function keys is equivalent to the Functionkeys, so it may be labelled as a Forward arrow (&#8594;). You can use Ctrl+Alt+F1 (Back, &#8592;) to return to Aura. You can do this at any time once ChromeOS has booted.</p></div>
+<div class="paragraph"><p>You can access a console window by pressing Ctrl+Alt+F2.
+The top row of browser keys is equivalent to the Function keys,
+so it may be labelled as a Forward arrow (&#8594;).
+You can use Ctrl+Alt+F1 (Back, &#8592;) to return to Aura.
+You can do this at any time once ChromeOS has booted.</p></div>
 <div class="paragraph"><p>If you log in as a guest (Browse as Guest) or with a Google Account, you can open a shell with Ctrl+Alt+T. From the crosh shell (prompt <code>crosh&gt;</code>), use the <code>shell</code> command to get a shell as the user <code>chronos</code>.</p></div>
 <div class="paragraph"><p><code>chronos</code> has sudo access to gain root privileges.</p></div>
 </div>
@@ -1007,12 +1011,12 @@ cellspacing="0" cellpadding="4">
 <div class="content">
 <pre><code># crossdev -S -t armv7a-hardfloat-linux-gnueabi</code></pre>
 </div></div>
+<div class="paragraph"><p>To change the version of gcc to install, pass the flag <code>--gcc &lt;version&gt;</code>. See <code>crossdev --help</code>.</p></div>
 <div class="paragraph"><p>When building the kernel, set the following environment variables:</p></div>
 <div class="listingblock">
 <div class="content"><div class="highlight"><pre><span></span><span class="na">ARCH</span><span class="o">=</span><span class="s">arm</span>
 <span class="na">CROSS_COMPILE</span><span class="o">=</span><span class="s">armv7a-hardfloat-linux-gnueabi-</span>
 </pre></div></div></div>
-<div class="paragraph"><p>To change the version of gcc to install, pass the flag <code>--gcc &lt;version&gt;</code>. See <code>crossdev --help</code>.</p></div>
 <div class="sect2">
 <h3 id="_qemu_user_mode_emulation">qemu user-mode emulation</h3>
 <div class="listingblock">
@@ -1415,6 +1419,17 @@ Software
 <span class="na">update_config</span><span class="o">=</span><span class="s">1</span>
 </pre></div></div></div>
 <div class="paragraph"><p>You can customise wpa_supplicant further or use wpa_cli as root or, if configured like above, as a user in the <em>wheel</em> group.</p></div>
+<div class="sect3">
+<h4 id="_bindist">bindist</h4>
+<div class="paragraph"><p>If you&#8217;re using a stage3 that was built with <code>USE=bindist</code>, wpa_supplicant will not install out-of-the-box
+as WPA3 requires <code>ecdsa</code> primitives that are blocked by <code>openssl[bindist]</code>.</p></div>
+<div class="paragraph"><p>As a minimum, <code>@system</code> contains <code>dev-libs/openssl</code> and <code>net-misc/openssh</code> which must have matching <code>bindist</code> flags:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code># emerge -1a openss{l,h}[-bindist]
+# emerge wpa_supplicant</code></pre>
+</div></div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_x11">X11</h3>
@@ -1466,8 +1481,8 @@ The HP Chomebook 11 seems to have difficulty booting from some USB devices.</p><
 <div class="paragraph"><p>One way to check that the USB is not being booted is if the GPT attributes are
 not being decremented. Set your partitions to Priority=15,Tries=15,Successful=0.
 After every boot, Tries should decrease by one every time the laptop beeps.</p></div>
-<div class="paragraph"><p>Check dmesg when plugging in a USB stick into a Linux computer (or chromeOS&#8217;s
-chrome://system dmesg).</p></div>
+<div class="paragraph"><p>Check <code>dmesg</code> when plugging in a USB stick into a Linux computer (or chromeOS&#8217;s
+<code>chrome://system</code> <code>dmesg</code>).</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -1516,7 +1531,7 @@ but you can disable module locking with the kernel command line:</p></div>
 <div id="footer">
 <div id="footer-text">
 Last updated
- 2018-11-26 20:32:24 -00
+ 2018-11-27 19:04:50 -00
 </div>
 </div>
 </body>
