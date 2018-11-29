@@ -19,7 +19,11 @@ TIP: If you want the Chromebook in Developer Mode but not run a custom kernel (e
 
 === Getting a shell ===
 
-You can access a console window by pressing Ctrl+Alt+F2. The top row of function keys is equivalent to the Functionkeys, so it may be labelled as a Forward arrow (->). You can use Ctrl+Alt+F1 (Back, <-) to return to Aura. You can do this at any time once ChromeOS has booted.
+You can access a console window by pressing Ctrl+Alt+F2.
+The top row of browser keys is equivalent to the Function keys,
+so it may be labelled as a Forward arrow (->).
+You can use Ctrl+Alt+F1 (Back, <-) to return to Aura.
+You can do this at any time once ChromeOS has booted.
 
 If you log in as a guest (Browse as Guest) or with a Google Account, you can open a shell with Ctrl+Alt+T. From the crosh shell (prompt `crosh>`), use the `shell` command to get a shell as the user `chronos`.
 
