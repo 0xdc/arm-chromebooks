@@ -39,8 +39,8 @@ One way to check that the USB is not being booted is if the GPT attributes are
 not being decremented. Set your partitions to Priority=15,Tries=15,Successful=0.
 After every boot, Tries should decrease by one every time the laptop beeps.
 
-Check dmesg when plugging in a USB stick into a Linux computer (or chromeOS's
-chrome://system dmesg).
+Check `dmesg` when plugging in a USB stick into a Linux computer (or chromeOS's
+`chrome://system` `dmesg`).
 
 * Bootable USB: `Mode Sense: 23 00 00 00`
 * Unbootable USB: `Mode Sense: 43 00 00 00`
