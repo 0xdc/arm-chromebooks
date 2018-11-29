@@ -14,3 +14,13 @@ include::wpa_supplicant.conf[]
 ----
 
 You can customise wpa_supplicant further or use wpa_cli as root or, if configured like above, as a user in the 'wheel' group.
+
+==== bindist ====
+
+If you're using a stage3 that was built with `USE=bindist`, wpa_supplicant will not install out-of-the-box
+as WPA3 requires `ecdsa` primitives that are blocked by `openssl[bindist]`.
+
+As a minimum, `@system` contains `dev-libs/openssl` and `net-misc/openssh` which must have matching `bindist` flags:
+
+  # emerge -1a openss{l,h}[-bindist]
+  # emerge wpa_supplicant
