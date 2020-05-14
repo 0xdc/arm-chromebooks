@@ -436,7 +436,7 @@ thead, p.table.header {
 p.table {
   margin-top: 0;
 }
-/* Because the table frame attribute is overriden by CSS in most browsers. */
+/* Because the table frame attribute is overridden by CSS in most browsers. */
 div.tableblock > table[frame="void"] {
   border-style: none;
 }
@@ -1009,13 +1009,13 @@ cellspacing="0" cellpadding="4">
 <div class="sectionbody">
 <div class="literalblock">
 <div class="content">
-<pre><code># crossdev -S -t armv7a-hardfloat-linux-gnueabi</code></pre>
+<pre><code># crossdev -S -t armv7a-unknown-linux-gnueabihf</code></pre>
 </div></div>
 <div class="paragraph"><p>To change the version of gcc to install, pass the flag <code>--gcc &lt;version&gt;</code>. See <code>crossdev --help</code>.</p></div>
 <div class="paragraph"><p>When building the kernel, set the following environment variables:</p></div>
 <div class="listingblock">
 <div class="content"><div class="highlight"><pre><span></span><span class="na">ARCH</span><span class="o">=</span><span class="s">arm</span>
-<span class="na">CROSS_COMPILE</span><span class="o">=</span><span class="s">armv7a-hardfloat-linux-gnueabi-</span>
+<span class="na">CROSS_COMPILE</span><span class="o">=</span><span class="s">armv7a-unknown-linux-gnueabihf-</span>
 </pre></div></div></div>
 <div class="sect2">
 <h3 id="_qemu_user_mode_emulation">qemu user-mode emulation</h3>
